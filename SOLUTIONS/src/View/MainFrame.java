@@ -1,7 +1,6 @@
 package View;
 import View.LoginPage.LoginListener;
 import View.LoginPage.LoginPanel;
-import View.LoginPage.PanelChangeListener;
 import View.RegistrationPage.RegistrationListener;
 import View.RegistrationPage.RegistrationPanel;
 

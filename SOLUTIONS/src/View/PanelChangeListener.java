@@ -1,4 +1,4 @@
-package View.LoginPage;
+package View;
 
 import javax.swing.*;
 

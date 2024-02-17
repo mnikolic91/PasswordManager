@@ -1,8 +1,7 @@
 package View.RegistrationPage;
 
-import View.LoginPage.LoginListener;
 import View.LoginPage.LoginPanel;
-import View.LoginPage.PanelChangeListener;
+import View.PanelChangeListener;
 
 import javax.swing.*;
 import java.awt.*;
