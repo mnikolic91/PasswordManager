@@ -10,8 +10,8 @@ import java.awt.event.ActionListener;
 
 public class RegistrationPanel extends JPanel {
 
-    private RegistrationListener registrationListener;
     private PanelChangeListener panelChangeListener;
+    private RegistrationListener registrationListener;
 
     private JTextField usernameField;
     private JPasswordField passwordField;
@@ -36,6 +36,7 @@ public class RegistrationPanel extends JPanel {
         activateComps();
 
         this.panelChangeListener = panelChangeListener;
+
     }
 
     private void initComps() {
@@ -48,7 +49,7 @@ public class RegistrationPanel extends JPanel {
         passwordLabel = new JLabel("Password:");
         confirmPasswordLabel = new JLabel("Confirm Password:");
         registerLabel = new JLabel("Already have an account?");
-        logoName = new JLabel("Simple Password Manager");
+        logoName = new JLabel("Keep It Safe");
         logoIcon = new ImageIcon("imgs/logoicon.png");
         logoLabel = new JLabel(logoIcon);
 
@@ -57,6 +58,7 @@ public class RegistrationPanel extends JPanel {
         confirmPasswordField.setMaximumSize(confirmPasswordField.getPreferredSize());
 
         setComponentForeground(Color.WHITE);
+
     }
 
     private void layoutUpperComps(){
@@ -120,21 +122,15 @@ public class RegistrationPanel extends JPanel {
         passwordLabel.setForeground(color);
         confirmPasswordLabel.setForeground(color);
         registerLabel.setForeground(color);
-        usernameField.setForeground(color);
-        usernameField.setCaretColor(color);
-        passwordField.setForeground(color);
-        passwordField.setCaretColor(color);
-        confirmPasswordField.setForeground(color);
-        confirmPasswordField.setCaretColor(color);
+        usernameField.setCaretColor(color.BLACK);
+        passwordField.setCaretColor(color.BLACK);
+        confirmPasswordField.setCaretColor(color.BLACK);
         backToLoginButton.setForeground(color);
         backToLoginButton.setBackground(Color.DARK_GRAY);
         registerButton.setForeground(color);
         registerButton.setBackground(Color.GRAY);
     }
 
-    public void setRegistrationListener(RegistrationListener listener) {
-        this.registrationListener = listener;
-    }
 
     private void activateComps() {
         backToLoginButton.addActionListener(new ActionListener() {
@@ -151,10 +147,29 @@ public class RegistrationPanel extends JPanel {
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                System.out.println("register button clicked");
+                if (registrationListener != null) {
+                    registrationListener.registrationSucceeded();
+                    System.out.println("not null");
 
-
+                }
             }
         });
     }
 
+    public void setRegistrationListener(RegistrationListener listener) {
+        this.registrationListener = listener;
+    }
+
+    public String getUsername() {
+        return usernameField.getText();
+    }
+
+    public char[] getPassword() {
+        return passwordField.getPassword();
+    }
+
+    public char[] getConfirmPassword() {
+        return confirmPasswordField.getPassword();
+    }
 }

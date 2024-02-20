@@ -5,6 +5,7 @@ public class UserModel {
     private int userID;
     private String username;
     private String password;
+    private String salt;
     private String email;
 
     public UserModel(String username, String password, String email) {
@@ -40,5 +41,17 @@ public class UserModel {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 }

@@ -1,4 +1,8 @@
 package View;
+import Controller.UserController;
+import Model.DataAccessObjects.UserDAO;
+import Model.DataAccessObjects.UserDAOImplementation;
+import Service.UserService;
 import View.LoginPage.LoginListener;
 import View.LoginPage.LoginPanel;
 import View.RegistrationPage.RegistrationListener;
@@ -10,9 +14,10 @@ public class MainFrame extends JFrame implements PanelChangeListener {
 
     private LoginPanel loginPanel;
     private RegistrationPanel registrationPanel;
+    private UserController userController;
 
     public MainFrame() {
-        setTitle("Login page");
+        setTitle("Simple Password Manager");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400, 400);
         initComps();
@@ -23,6 +28,13 @@ public class MainFrame extends JFrame implements PanelChangeListener {
 
     private void initComps() {
         loginPanel = new LoginPanel(this);
+        registrationPanel = new RegistrationPanel(this);
+
+        UserDAO userDAO = new UserDAOImplementation();
+        UserService userService = new UserService(userDAO);
+
+        userController = new UserController(userService, loginPanel, registrationPanel);
+
         loginPanel.setLoginListener(new LoginListener() {
 
             @Override
@@ -31,33 +43,20 @@ public class MainFrame extends JFrame implements PanelChangeListener {
             }
         });
 
-        registrationPanel = new RegistrationPanel(this);
-        registrationPanel.setRegistrationListener(new RegistrationListener() {
-            @Override
-            public void registrationSucceeded() {
-                System.out.println("Registration successful. Switching panels...");
-            }
-
-            @Override
-            public void backToLogin() {
-
-            }
-        });
     }
 
     @Override
     public void onPanelChange(JPanel newPanel) {
+        System.out.println("Changing panel...");
         getContentPane().removeAll();
         getContentPane().add(newPanel);
         revalidate();
         repaint();
     }
 
-
-
     private void layoutComps() {
         add(loginPanel);
+        add(registrationPanel);
     }
-
 
 }

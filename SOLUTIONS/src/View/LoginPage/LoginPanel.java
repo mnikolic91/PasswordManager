@@ -45,7 +45,7 @@ public class LoginPanel extends JPanel {
         usernameLabel = new JLabel("Username:");
         passwordLabel = new JLabel("Password:");
         registerLabel = new JLabel("Don't have an account?");
-        logoName = new JLabel("Simple Password Manager");
+        logoName = new JLabel("Keep It Safe");
         logoIcon = new ImageIcon("imgs/logoicon.png");
         logoLabel = new JLabel(logoIcon);
 
@@ -151,6 +151,19 @@ public class LoginPanel extends JPanel {
             }
         });
     }
+
+    public String getUsername() {
+        return usernameField.getText();
+    }
+
+    public char[] getPassword() {
+        return passwordField.getPassword();
+    }
+
+    public void addLoginButtonActionListener(ActionListener listener) {
+        loginButton.addActionListener(listener);
+    }
+
 
 
     public void setLoginListener(LoginListener listener) {
