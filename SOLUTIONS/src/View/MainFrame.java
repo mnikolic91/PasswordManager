@@ -3,9 +3,7 @@ import Controller.UserController;
 import Model.DataAccessObjects.UserDAO;
 import Model.DataAccessObjects.UserDAOImplementation;
 import Service.UserService;
-import View.LoginPage.LoginListener;
 import View.LoginPage.LoginPanel;
-import View.RegistrationPage.RegistrationListener;
 import View.RegistrationPage.RegistrationPanel;
 
 import javax.swing.*;
@@ -34,15 +32,6 @@ public class MainFrame extends JFrame implements PanelChangeListener {
         UserService userService = new UserService(userDAO);
 
         userController = new UserController(userService, loginPanel, registrationPanel);
-
-        loginPanel.setLoginListener(new LoginListener() {
-
-            @Override
-            public void loginSucceeded() {
-                System.out.println("Login successful. Switching panels...");
-            }
-        });
-
     }
 
     @Override
@@ -55,8 +44,8 @@ public class MainFrame extends JFrame implements PanelChangeListener {
     }
 
     private void layoutComps() {
-        add(loginPanel);
         add(registrationPanel);
-    }
+        add(loginPanel);
 
+    }
 }

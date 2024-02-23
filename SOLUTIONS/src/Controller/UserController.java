@@ -2,58 +2,66 @@ package Controller;
 
 import Model.PasswordUtil;
 import Service.UserService;
+import View.LoginPage.LoginPanelListener;
 import View.LoginPage.LoginPanel;
-import View.RegistrationPage.RegistrationListener;
+import View.RegistrationPage.RegistrationPanelListener;
 import View.RegistrationPage.RegistrationPanel;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Arrays;
 
 public class UserController {
 
     private UserService userService;
     private LoginPanel loginPanel;
+    private LoginPanelListener loginListener;
     private RegistrationPanel registrationPanel;
-    private RegistrationListener registrationListener;
+    private RegistrationPanelListener registrationListener;
 
     public UserController(UserService userService, LoginPanel loginPanel, RegistrationPanel registrationPanel) {
         this.userService = userService;
         this.loginPanel = loginPanel;
         this.registrationPanel = registrationPanel;
         initController();
+        initLoginActionListener();
+
     }
 
     private void initController() {
-        loginPanel.addLoginButtonActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                performLogin();
-            }
-        });
-
-        registrationListener = new RegistrationListener() {
+         registrationListener = new RegistrationPanelListener() {
             @Override
             public void registrationSucceeded() {
                 System.out.println("Registration successful");
                 performRegistration(registrationPanel.getUsername(), registrationPanel.getPassword(), registrationPanel.getConfirmPassword());
             }
-
             @Override
             public void backToLogin() {
             }
         };
-
         registrationPanel.setRegistrationListener(registrationListener);
     }
 
-    private void performLogin() {
-        String username = loginPanel.getUsername();
-        char[] password = loginPanel.getPassword();
+    private void initLoginActionListener(){
+        loginListener = new LoginPanelListener() {
+            @Override
+            public void loginSucceeded() {
+                System.out.println("Login successful reached");
+                performLogin(loginPanel.getUsername(), loginPanel.getPassword());
+            }
+
+            public void anotherFunction(){
+                System.out.println("Another function");
+            }
+        };
+        loginPanel.setLoginListener(loginListener);
+    }
+
+    private void performLogin(String username, char[] password) {
+        System.out.println("Performing login");
         boolean loginSuccess = userService.loginUser(username, new String(password));
         if (loginSuccess) {
             JOptionPane.showMessageDialog(loginPanel, "Login Successful", "Success", JOptionPane.INFORMATION_MESSAGE);
+            System.out.println(username + " logged in successfully " + new String(password));
 
         } else {
             JOptionPane.showMessageDialog(loginPanel, "Login Failed, Please Try Again", "Failed", JOptionPane.INFORMATION_MESSAGE);

@@ -1,5 +1,5 @@
 package View.LoginPage;
 
-public interface LoginListener {
+public interface LoginPanelListener {
     void loginSucceeded();
 }

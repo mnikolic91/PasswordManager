@@ -11,8 +11,8 @@ import java.awt.event.ActionListener;
 
 public class LoginPanel extends JPanel {
 
-    private LoginListener loginListener;
     private PanelChangeListener panelChangeListener;
+    private LoginPanelListener loginListener;
 
     private JTextField usernameField;
     private JPasswordField passwordField;
@@ -125,17 +125,13 @@ public class LoginPanel extends JPanel {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String username = usernameField.getText();
-                char[] password = passwordField.getPassword();
-                boolean loginSuccess = attemptLogin(username, password);
-                if (loginSuccess) {
-                    JOptionPane.showMessageDialog(LoginPanel.this, "Login Successful", "Success", JOptionPane.INFORMATION_MESSAGE);
-                    clearFields();
-                    if (loginListener != null) {
-                        loginListener.loginSucceeded();
-                    }
+                System.out.println("Login button clicked");
+                if (loginListener != null) {
+                    System.out.println("Login listener is not null");
+                    loginListener.loginSucceeded();
+                    System.out.println("Will go to dashboard");
                 } else {
-                    JOptionPane.showMessageDialog(LoginPanel.this, "Login Failed", "Error", JOptionPane.ERROR_MESSAGE);
+                    System.out.println("Login listener is null");
                 }
             }
         });
@@ -143,13 +139,18 @@ public class LoginPanel extends JPanel {
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 if (panelChangeListener != null) {
                     RegistrationPanel registrationPanel = new RegistrationPanel(panelChangeListener);
                     panelChangeListener.onPanelChange(registrationPanel);
                 }
             }
         });
+    }
+
+
+
+    public void setLoginListener(LoginPanelListener listener) {
+        this.loginListener = listener;
     }
 
     public String getUsername() {
@@ -160,15 +161,6 @@ public class LoginPanel extends JPanel {
         return passwordField.getPassword();
     }
 
-    public void addLoginButtonActionListener(ActionListener listener) {
-        loginButton.addActionListener(listener);
-    }
-
-
-
-    public void setLoginListener(LoginListener listener) {
-        this.loginListener = listener;
-    }
 
     private boolean attemptLogin(String username, char[] password) {
         return true;

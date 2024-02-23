@@ -1,6 +1,6 @@
 package View.RegistrationPage;
 
-public interface RegistrationListener {
+public interface RegistrationPanelListener {
     void registrationSucceeded();
     void backToLogin();
 }

@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 public class RegistrationPanel extends JPanel {
 
     private PanelChangeListener panelChangeListener;
-    private RegistrationListener registrationListener;
+    private RegistrationPanelListener registrationListener;
 
     private JTextField usernameField;
     private JPasswordField passwordField;
@@ -157,7 +157,7 @@ public class RegistrationPanel extends JPanel {
         });
     }
 
-    public void setRegistrationListener(RegistrationListener listener) {
+    public void setRegistrationListener(RegistrationPanelListener listener) {
         this.registrationListener = listener;
     }
 

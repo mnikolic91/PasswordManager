@@ -1,6 +1,7 @@
 package Service;
 
 import Model.DataAccessObjects.UserDAO;
+import Model.PasswordUtil;
 import Model.UserModel;
 
 public class UserService {
@@ -11,10 +12,13 @@ public class UserService {
         this.userDAO = userDAO;
     }
 
-    public boolean registerUser(String username, String password) {
-        UserModel user = new UserModel(username, password, password);
-        userDAO.insert(user);
-        return true;
+    public boolean loginUser(String username, String password) {
+        UserModel user = userDAO.findByUsername(username);
+        if (user != null) {
+            String hashedPassword = PasswordUtil.hashPassword(password, user.getSalt());
+            return hashedPassword.equals(user.getPassword());
+        }
+        return false;
     }
 
 
@@ -22,15 +26,5 @@ public class UserService {
         UserModel user = new UserModel(username, hashedPassword, salt);
         userDAO.insert(user);
         return true;
-    }
-
-
-    public boolean loginUser(String username, String password) {
-
-        UserModel user = userDAO.findByUsername(username);
-        if (user != null) {
-            return true;
-        }
-        return false;
     }
 }
