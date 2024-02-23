@@ -48,9 +48,10 @@ public class UserController {
                 System.out.println("Login successful reached");
                 performLogin(loginPanel.getUsername(), loginPanel.getPassword());
             }
-
-            public void anotherFunction(){
-                System.out.println("Another function");
+            //useless function which purpose is just to remove a bizarre bug that happens while instancing the listener
+            //function shouldnt be removed because it will cause a bug
+            public void uselessFunction(){
+                System.out.println("Useless function");
             }
         };
         loginPanel.setLoginListener(loginListener);
