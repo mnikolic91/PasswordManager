@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.PasswordUtil;
 import Service.UserService;
 import View.LoginPage.LoginPanel;
 import View.RegistrationPage.RegistrationListener;
@@ -67,12 +68,16 @@ public class UserController {
             return;
         }
 
-        boolean registrationSuccess = userService.registerUser(username, new String(password));
+        String salt = PasswordUtil.generateSalt(16);
+        String hashedPassword = PasswordUtil.hashPassword(new String(password), salt);
+
+        boolean registrationSuccess = userService.registerUser(username, hashedPassword, salt);
 
         if (registrationSuccess) {
             JOptionPane.showMessageDialog(registrationPanel, "Registration Successful", "Success", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(registrationPanel, "Please try again.", "Registration failed", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(registrationPanel, "Registration failed. Please try again.", "Error", JOptionPane.INFORMATION_MESSAGE);
         }
     }
+
 }

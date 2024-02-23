@@ -12,7 +12,7 @@ public class UserDAOImplementation implements UserDAO {
 
     @Override
     public void insert(UserModel user) {
-        String sql = "INSERT INTO users(username, password, salt, email) VALUES(?,?,?,?)";
+        String sql = "INSERT INTO users(username, password, salt) VALUES(?,?,?)";
 
         try (Connection conn = DatabaseConnection.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -20,13 +20,13 @@ public class UserDAOImplementation implements UserDAO {
             pstmt.setString(1, user.getUsername());
             pstmt.setString(2, user.getPassword());
             pstmt.setString(3, user.getSalt());
-            pstmt.setString(4, user.getEmail());
 
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
+
 
     @Override
     public UserModel findByUsername(String username) {
@@ -43,9 +43,8 @@ public class UserDAOImplementation implements UserDAO {
                 user = new UserModel(
                         rs.getString("username"),
                         rs.getString("password"),
-                        rs.getString("email"));
+                        rs.getString("salt"));
                 user.setUserID(rs.getInt("userID"));
-                user.setSalt(rs.getString("salt"));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -54,23 +53,24 @@ public class UserDAOImplementation implements UserDAO {
         return user;
     }
 
+
     @Override
     public void update(UserModel user) {
-        String sql = "UPDATE users SET password = ?, salt = ?, email = ? WHERE username = ?";
+        String sql = "UPDATE users SET password = ?, salt = ? WHERE username = ?";
 
         try (Connection conn = DatabaseConnection.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, user.getPassword());
             pstmt.setString(2, user.getSalt());
-            pstmt.setString(3, user.getEmail());
-            pstmt.setString(4, user.getUsername());
+            pstmt.setString(3, user.getUsername());
 
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
+
 
     @Override
     public void delete(UserModel user) {

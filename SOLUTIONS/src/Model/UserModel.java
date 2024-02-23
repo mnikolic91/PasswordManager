@@ -6,14 +6,14 @@ public class UserModel {
     private String username;
     private String password;
     private String salt;
-    private String email;
 
-    public UserModel(String username, String password, String email) {
-        userID++;
+    public UserModel(String username, String hashedPassword, String salt) {
         this.username = username;
-        this.password = password;
-        this.email = email;
+        this.password = hashedPassword;
+        this.salt = salt;
     }
+
+
 
     public int getUserID() {
         return userID;
@@ -35,13 +35,6 @@ public class UserModel {
         this.password = password;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public void setUserID(int userID) {
         this.userID = userID;

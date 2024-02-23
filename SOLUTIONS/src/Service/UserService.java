@@ -18,12 +18,12 @@ public class UserService {
     }
 
 
-    public boolean registerUser(String username, String password, String email) {
-
-        UserModel user = new UserModel(username, password, email);
+    public boolean registerUser(String username, String hashedPassword, String salt) {
+        UserModel user = new UserModel(username, hashedPassword, salt);
         userDAO.insert(user);
         return true;
     }
+
 
     public boolean loginUser(String username, String password) {
 
