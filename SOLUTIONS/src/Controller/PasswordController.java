@@ -12,9 +12,9 @@ public class PasswordController {
     private PasswordPanel passwordPanel;
 
     public PasswordController(PasswordPanel passwordPanel) {
-        this.passwordService = new PasswordService();
         this.passwordPanel = passwordPanel;
-        passwordPanel.setPasswordController(this);
+        this.passwordService = new PasswordService();
+        refreshPasswordList();
     }
 
     public void refreshPasswordList() {
@@ -24,9 +24,5 @@ public class PasswordController {
             System.out.println("Updating password table");
             passwordPanel.updatePasswordTable(passwords);
         }
-    }
-
-    public void setPasswordPanel(PasswordPanel passwordPanel) {
-        this.passwordPanel = passwordPanel;
     }
 }

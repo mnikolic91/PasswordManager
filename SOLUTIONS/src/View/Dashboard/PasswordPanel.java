@@ -11,11 +11,9 @@ import java.util.List;
 public class PasswordPanel extends JPanel {
     private JTable passwordTable;
     private DefaultTableModel passwordTableModel;
-    private PasswordController passwordController;
 
     public PasswordPanel() {
         initializeTableModel();
-        passwordController.refreshPasswordList();
     }
 
     private void initializeTableModel() {
@@ -25,24 +23,16 @@ public class PasswordPanel extends JPanel {
         passwordTableModel.addColumn("Last Update");
         passwordTable = new JTable(passwordTableModel);
         add(new JScrollPane(passwordTable), BorderLayout.CENTER);
-        passwordController.refreshPasswordList();
-    }
-
-    public void setPasswordController(PasswordController controller) {
-        this.passwordController = controller;
     }
 
     public void updatePasswordTable(List<PasswordModel> passwords) {
-        passwordController.refreshPasswordList();
-        if (passwordTableModel != null) {
-            passwordTableModel.setRowCount(0);
-            for (PasswordModel password : passwords) {
-                passwordTableModel.addRow(new Object[] {
-                        password.getTitle(),
-                        password.getCreationDate(),
-                        password.getLastUpdateDate()
-                });
-            }
+        passwordTableModel.setRowCount(0);
+        for (PasswordModel password : passwords) {
+            passwordTableModel.addRow(new Object[] {
+                    password.getTitle(),
+                    password.getCreationDate(),
+                    password.getLastUpdateDate()
+            });
         }
     }
 }

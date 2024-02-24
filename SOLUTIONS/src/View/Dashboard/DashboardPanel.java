@@ -9,18 +9,15 @@ import java.awt.*;
 public class DashboardPanel extends JPanel {
 
     private PanelChangeListener panelChangeListener;
-    private PasswordController passwordController;
     private PasswordPanel passwordPanel;
     private MenuPanel menuPanel;
     private PreviewPanel previewPanel;
+    private PasswordController passwordController;
 
     public DashboardPanel(PanelChangeListener panelChangeListener) {
         this.panelChangeListener = panelChangeListener;
         passwordPanel = new PasswordPanel();
-
         passwordController = new PasswordController(passwordPanel);
-
-        passwordPanel.setPasswordController(passwordController);
 
         setLayout(new BorderLayout());
         menuPanel = new MenuPanel();
