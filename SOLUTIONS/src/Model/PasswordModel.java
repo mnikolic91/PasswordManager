@@ -2,7 +2,7 @@ package Model;
 
 public class PasswordModel {
 
-    private static int entryID;
+    private int entryID;
     private int userID;
     private String title;
     private String username;
@@ -12,7 +12,6 @@ public class PasswordModel {
     private String lastUpdateDate;
 
     public PasswordModel(int userID, String title, String username, String password, String url, String creationDate, String lastUpdateDate) {
-        entryID++;
         this.userID = userID;
         this.title = title;
         this.username = username;
@@ -22,12 +21,12 @@ public class PasswordModel {
         this.lastUpdateDate = lastUpdateDate;
     }
 
-    public static int getEntryID() {
+    public int getEntryID() {
         return entryID;
     }
 
-    public static void setEntryID(int entryID) {
-        PasswordModel.entryID = entryID;
+    public void setEntryID(int entryID) {
+        this.entryID = entryID;
     }
 
     public int getUserID() {

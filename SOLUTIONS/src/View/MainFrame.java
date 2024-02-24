@@ -3,6 +3,7 @@ import Controller.UserController;
 import Model.DataAccessObjects.UserDAO;
 import Model.DataAccessObjects.UserDAOImplementation;
 import Service.UserService;
+import View.Dashboard.DashboardPanel;
 import View.LoginPage.LoginPanel;
 import View.RegistrationPage.RegistrationPanel;
 
@@ -13,6 +14,7 @@ public class MainFrame extends JFrame implements PanelChangeListener {
     private LoginPanel loginPanel;
     private RegistrationPanel registrationPanel;
     private UserController userController;
+    private DashboardPanel dashboardPanel;
 
     public MainFrame() {
         setTitle("Simple Password Manager");
@@ -27,6 +29,7 @@ public class MainFrame extends JFrame implements PanelChangeListener {
     private void initComps() {
         loginPanel = new LoginPanel(this);
         registrationPanel = new RegistrationPanel(this);
+        dashboardPanel = new DashboardPanel(this);
 
         UserDAO userDAO = new UserDAOImplementation();
         UserService userService = new UserService(userDAO);
@@ -44,8 +47,8 @@ public class MainFrame extends JFrame implements PanelChangeListener {
     }
 
     private void layoutComps() {
+        add(dashboardPanel);
         add(registrationPanel);
         add(loginPanel);
-
     }
 }

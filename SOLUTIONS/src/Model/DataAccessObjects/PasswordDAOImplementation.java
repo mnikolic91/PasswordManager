@@ -14,7 +14,7 @@ public class PasswordDAOImplementation implements PasswordDAO {
 
     @Override
     public void insert(PasswordModel password) {
-        String sql = "INSERT INTO passwords(userID, title, username, password, url, creationDate, lastUpdateDate) VALUES(?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO password_entries(userID, title, username, password, url, creationDate, lastUpdateDate) VALUES(?,?,?,?,?,?,?)";
 
         try (Connection conn = DatabaseConnection.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -36,7 +36,7 @@ public class PasswordDAOImplementation implements PasswordDAO {
     @Override
     public List<PasswordModel> findByUserId(int userId) {
         List<PasswordModel> passwords = new ArrayList<>();
-        String sql = "SELECT * FROM passwords WHERE userID = ?";
+        String sql = "SELECT * FROM password_entries WHERE userID = ?";
 
         try (Connection conn = DatabaseConnection.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -65,7 +65,7 @@ public class PasswordDAOImplementation implements PasswordDAO {
 
     @Override
     public void update(PasswordModel password) {
-        String sql = "UPDATE passwords SET title = ?, username = ?, password = ?, url = ?, creationDate = ?, lastUpdateDate = ? WHERE entryID = ? AND userID = ?";
+        String sql = "UPDATE password_entries SET title = ?, username = ?, password = ?, url = ?, creationDate = ?, lastUpdateDate = ? WHERE entryID = ? AND userID = ?";
 
         try (Connection conn = DatabaseConnection.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -76,7 +76,7 @@ public class PasswordDAOImplementation implements PasswordDAO {
             pstmt.setString(4, password.getUrl());
             pstmt.setString(5, password.getCreationDate());
             pstmt.setString(6, password.getLastUpdateDate());
-            pstmt.setInt(7, PasswordModel.getEntryID());
+            pstmt.setInt(7, password.getEntryID());
             pstmt.setInt(8, password.getUserID());
 
             pstmt.executeUpdate();
@@ -87,12 +87,12 @@ public class PasswordDAOImplementation implements PasswordDAO {
 
     @Override
     public void delete(PasswordModel password) {
-        String sql = "DELETE FROM passwords WHERE entryID = ? AND userID = ?";
+        String sql = "DELETE FROM password_entries WHERE entryID = ? AND userID = ?";
 
         try (Connection conn = DatabaseConnection.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setInt(1, PasswordModel.getEntryID());
+            pstmt.setInt(1, password.getEntryID());
             pstmt.setInt(2, password.getUserID());
 
             pstmt.executeUpdate();

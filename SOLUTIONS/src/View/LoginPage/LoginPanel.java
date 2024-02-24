@@ -1,5 +1,6 @@
 package View.LoginPage;
 
+import View.Dashboard.DashboardPanel;
 import View.PanelChangeListener;
 import View.RegistrationPage.RegistrationPanel;
 
@@ -129,7 +130,9 @@ public class LoginPanel extends JPanel {
                 if (loginListener != null) {
                     System.out.println("Login listener is not null");
                     loginListener.loginSucceeded();
-                    System.out.println("Will go to dashboard");
+                    DashboardPanel dashboardPanel = new DashboardPanel(panelChangeListener);
+                    dashboardPanel.setVisible(true);
+                    panelChangeListener.onPanelChange(dashboardPanel);
                 } else {
                     System.out.println("Login listener is null");
                 }
