@@ -27,4 +27,9 @@ public class UserService {
         userDAO.insert(user);
         return true;
     }
+
+    public UserModel findByUsername(String username) {
+        return userDAO.findByUsername(username);
+    }
+
 }

@@ -1,6 +1,8 @@
 package Controller;
 
 import Model.PasswordUtil;
+import Model.UserModel;
+import Model.UserSession;
 import Service.UserService;
 import View.LoginPage.LoginPanelListener;
 import View.LoginPage.LoginPanel;
@@ -61,13 +63,17 @@ public class UserController {
         System.out.println("Performing login");
         boolean loginSuccess = userService.loginUser(username, new String(password));
         if (loginSuccess) {
-            JOptionPane.showMessageDialog(loginPanel, "Login Successful", "Success", JOptionPane.INFORMATION_MESSAGE);
-            System.out.println(username + " logged in successfully " + new String(password));
-
+            UserModel user = userService.findByUsername(username);
+            if (user != null) {
+                UserSession.getInstance().setUserID(user.getUserID());
+                System.out.println("User ID: " + user.getUserID() + " is now logged in.");
+                JOptionPane.showMessageDialog(loginPanel, "Login Successful", "Success", JOptionPane.INFORMATION_MESSAGE);
+            }
         } else {
             JOptionPane.showMessageDialog(loginPanel, "Login Failed, Please Try Again", "Failed", JOptionPane.INFORMATION_MESSAGE);
         }
     }
+
 
     private void performRegistration(String username, char[] password, char[] confirmPassword) {
         System.out.println("Performing registration");

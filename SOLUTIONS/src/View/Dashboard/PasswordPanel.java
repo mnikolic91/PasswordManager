@@ -1,6 +1,5 @@
 package View.Dashboard;
 
-import Controller.PasswordController;
 import Model.PasswordModel;
 
 import javax.swing.*;

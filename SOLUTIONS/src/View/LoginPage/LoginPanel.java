@@ -151,7 +151,6 @@ public class LoginPanel extends JPanel {
     }
 
 
-
     public void setLoginListener(LoginPanelListener listener) {
         this.loginListener = listener;
     }
@@ -165,13 +164,5 @@ public class LoginPanel extends JPanel {
     }
 
 
-    private boolean attemptLogin(String username, char[] password) {
-        return true;
-    }
-
-    private void clearFields() {
-        usernameField.setText("");
-        passwordField.setText("");
-    }
 }
 

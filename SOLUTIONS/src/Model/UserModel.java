@@ -2,7 +2,7 @@ package Model;
 
 public class UserModel {
 
-    private static int userID;
+    private int userID;
     private String username;
     private String password;
     private String salt;
@@ -13,9 +13,10 @@ public class UserModel {
         this.salt = salt;
     }
 
-    public static int getUserID() {
+    public int getUserID() {
         return userID;
     }
+
 
     public String getUsername() {
         return username;

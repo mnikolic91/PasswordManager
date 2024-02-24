@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.PasswordModel;
+import Model.UserSession;
 import Service.PasswordService;
 import View.Dashboard.PasswordPanel;
 
@@ -18,10 +19,10 @@ public class PasswordController {
     }
 
     public void refreshPasswordList() {
-        int userID = 1;
+        int userID = UserSession.getInstance().getUserID();
         List<PasswordModel> passwords = passwordService.getPasswordsForUser(userID);
         if (passwordPanel != null) {
-            System.out.println("Updating password table");
+            System.out.println("Updating password table for user ID: " + userID);
             passwordPanel.updatePasswordTable(passwords);
         }
     }
