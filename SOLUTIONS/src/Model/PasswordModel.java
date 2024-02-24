@@ -17,6 +17,7 @@ public class PasswordModel {
         this.username = username;
         this.password = password;
         this.url = url;
+
     }
 
     public int getEntryID() {

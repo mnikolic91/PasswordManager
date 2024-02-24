@@ -51,7 +51,7 @@ public class DashboardPanel extends JPanel {
         dialog.add(passwordField);
         dialog.add(new JLabel("URL:"));
         dialog.add(urlField);
-        dialog.add(new JLabel()); // Placeholder for grid layout
+        dialog.add(new JLabel());
         dialog.add(saveButton);
 
 
