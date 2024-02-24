@@ -11,14 +11,12 @@ public class PasswordModel {
     private String creationDate;
     private String lastUpdateDate;
 
-    public PasswordModel(int userID, String title, String username, String password, String url, String creationDate, String lastUpdateDate) {
+    public PasswordModel(int userID, String title, String username, String password, String url) {
         this.userID = userID;
         this.title = title;
         this.username = username;
         this.password = password;
         this.url = url;
-        this.creationDate = creationDate;
-        this.lastUpdateDate = lastUpdateDate;
     }
 
     public int getEntryID() {

@@ -1,13 +1,17 @@
 package View.Dashboard;
+import Controller.PasswordController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MenuPanel extends JPanel {
+
+    private PasswordController passwordController;
+
     private JButton addNewButton;
     private JButton encryptionButton;
+
 
     public MenuPanel() {
         addNewButton = new JButton("Add New");
@@ -15,12 +19,10 @@ public class MenuPanel extends JPanel {
         setLayout(new FlowLayout(FlowLayout.LEFT));
         add(addNewButton);
         add(encryptionButton);
+
     }
 
-    ActionListener addNewListener = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-
-        }
-    };
+    public JButton getAddNewButton() {
+        return addNewButton;
+    }
 }

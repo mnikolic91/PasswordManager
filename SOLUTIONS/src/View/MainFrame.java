@@ -3,6 +3,7 @@ import Controller.UserController;
 import Model.DataAccessObjects.UserDAO;
 import Model.DataAccessObjects.UserDAOImplementation;
 import Service.UserService;
+
 import View.Dashboard.DashboardPanel;
 import View.LoginPage.LoginPanel;
 import View.RegistrationPage.RegistrationPanel;

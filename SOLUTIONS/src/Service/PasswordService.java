@@ -17,4 +17,8 @@ public class PasswordService {
     public List<PasswordModel> getPasswordsForUser(int userID) {
         return passwordDAO.findByUserId(userID);
     }
+
+    public void addNewPassword(PasswordModel newPassword) {
+        passwordDAO.insert(newPassword);
+    }
 }

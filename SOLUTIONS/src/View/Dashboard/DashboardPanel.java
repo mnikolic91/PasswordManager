@@ -1,5 +1,4 @@
 package View.Dashboard;
-
 import Controller.PasswordController;
 import View.PanelChangeListener;
 
@@ -17,14 +16,57 @@ public class DashboardPanel extends JPanel {
     public DashboardPanel(PanelChangeListener panelChangeListener) {
         this.panelChangeListener = panelChangeListener;
         passwordPanel = new PasswordPanel();
-        passwordController = new PasswordController(passwordPanel);
+        previewPanel = new PreviewPanel();
+        menuPanel = new MenuPanel();
+        passwordController = new PasswordController(passwordPanel, menuPanel);
+
 
         setLayout(new BorderLayout());
-        menuPanel = new MenuPanel();
-        previewPanel = new PreviewPanel();
         add(menuPanel, BorderLayout.NORTH);
         add(passwordPanel, BorderLayout.CENTER);
         add(previewPanel, BorderLayout.SOUTH);
         setVisible(true);
+
+        JButton addNewButton = menuPanel.getAddNewButton();
+        addNewButton.addActionListener(e -> showAddNewPasswordDialog());
     }
+
+    private void showAddNewPasswordDialog() {
+        JDialog dialog = new JDialog();
+        dialog.setTitle("Add New Password");
+        dialog.setSize(400, 300);
+        dialog.setLayout(new GridLayout(0, 2, 10, 10));
+
+        JTextField titleField = new JTextField();
+        JTextField usernameField = new JTextField();
+        JPasswordField passwordField = new JPasswordField();
+        JTextField urlField = new JTextField();
+        JButton saveButton = new JButton("Save");
+
+        dialog.add(new JLabel("Title:"));
+        dialog.add(titleField);
+        dialog.add(new JLabel("Username:"));
+        dialog.add(usernameField);
+        dialog.add(new JLabel("Password:"));
+        dialog.add(passwordField);
+        dialog.add(new JLabel("URL:"));
+        dialog.add(urlField);
+        dialog.add(new JLabel()); // Placeholder for grid layout
+        dialog.add(saveButton);
+
+
+        saveButton.addActionListener(e -> {
+            String title = titleField.getText();
+            String username = usernameField.getText();
+            String password = new String(passwordField.getPassword());
+            String url = urlField.getText();
+            passwordController.addNewPassword(title, username, password, url);
+            dialog.dispose();
+
+        });
+
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
+    }
+
 }
