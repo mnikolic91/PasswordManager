@@ -19,7 +19,7 @@ public class DashboardPanel extends JPanel {
         passwordPanel = new PasswordPanel();
         previewPanel = new PreviewPanel();
         menuPanel = new MenuPanel();
-        passwordController = new PasswordController(passwordPanel, menuPanel);
+        passwordController = new PasswordController(passwordPanel, menuPanel, previewPanel);
 
         setLayout(new BorderLayout());
         add(menuPanel, BorderLayout.NORTH);
