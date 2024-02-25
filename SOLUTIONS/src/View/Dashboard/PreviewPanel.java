@@ -2,6 +2,9 @@ package View.Dashboard;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.security.SecureRandom;
 
 public class PreviewPanel extends JPanel {
     private JTextField titleField;
@@ -11,6 +14,7 @@ public class PreviewPanel extends JPanel {
     private JButton updatePasswordButton;
     private JButton deletePasswordButton;
     private JButton generatePasswordButton;
+    private JTextField strongPasswordField;
 
     public PreviewPanel() {
         titleField = new JTextField(20);
@@ -20,8 +24,10 @@ public class PreviewPanel extends JPanel {
         updatePasswordButton = new JButton("Update Password");
         deletePasswordButton = new JButton("Delete Password");
         generatePasswordButton = new JButton("Generate a Strong Password");
+        strongPasswordField = new JTextField(20);
+        strongPasswordField.setEditable(false);
 
-        setLayout(new GridLayout(5, 2, 5, 5)); // Adjust grid layout as per your need
+        setLayout(new GridLayout(6, 2, 5, 5));
         add(new JLabel("Title:"));
         add(titleField);
         add(new JLabel("Username:"));
@@ -30,12 +36,39 @@ public class PreviewPanel extends JPanel {
         add(passwordField);
         add(new JLabel("URL:"));
         add(urlField);
+        add(new JLabel("Generated Password:"));
+        add(strongPasswordField);
         add(updatePasswordButton);
         add(deletePasswordButton);
         add(generatePasswordButton);
+
+        generatePasswordButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String generatedPassword = generateStrongPassword();
+                strongPasswordField.setText(generatedPassword);
+            }
+        });
+    }
+    private String generateStrongPassword() {
+        String upperCaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String lowerCaseLetters = "abcdefghijklmnopqrstuvwxyz";
+        String numbers = "0123456789";
+        String specialChars = "!@#$%^&*()_+{}[]";
+
+        String allChars = upperCaseLetters + lowerCaseLetters + numbers + specialChars;
+
+        SecureRandom random = new SecureRandom();
+        StringBuilder password = new StringBuilder();
+
+        for (int i = 0; i < 12; i++) {
+            int randomIndex = random.nextInt(allChars.length());
+            password.append(allChars.charAt(randomIndex));
+        }
+
+        return password.toString();
     }
 
-    // Add getters for accessing the data in the input fields
     public String getTitle() {
         return titleField.getText();
     }
@@ -45,7 +78,6 @@ public class PreviewPanel extends JPanel {
     }
 
     public String getPassword() {
-        // getPassword() returns a char array, convert it to a string
         return new String(passwordField.getPassword());
     }
 
@@ -53,19 +85,10 @@ public class PreviewPanel extends JPanel {
         return urlField.getText();
     }
 
-    // Method to set data in the input fields
     public void setData(String title, String username, String password, String url) {
         titleField.setText(title);
         usernameField.setText(username);
         passwordField.setText(password);
         urlField.setText(url);
-    }
-
-    // Method to clear data in the input fields
-    public void clearData() {
-        titleField.setText("");
-        usernameField.setText("");
-        passwordField.setText("");
-        urlField.setText("");
     }
 }

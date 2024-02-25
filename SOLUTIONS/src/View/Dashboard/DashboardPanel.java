@@ -24,7 +24,7 @@ public class DashboardPanel extends JPanel {
         setLayout(new BorderLayout());
         add(menuPanel, BorderLayout.NORTH);
 
-        JPanel contentPanel = new JPanel(new BorderLayout()); // Panel to hold passwordPanel and previewPanel
+        JPanel contentPanel = new JPanel(new BorderLayout());
         contentPanel.add(passwordPanel, BorderLayout.WEST);
         contentPanel.add(previewPanel, BorderLayout.EAST);
 
@@ -37,7 +37,7 @@ public class DashboardPanel extends JPanel {
     private void showAddNewPasswordDialog() {
         JDialog dialog = new JDialog();
         dialog.setTitle("Add New Password");
-        dialog.setSize(400, 300);
+        dialog.setSize(1200, 800);
         dialog.setLayout(new GridLayout(0, 2, 10, 10));
 
         JTextField titleField = new JTextField();
