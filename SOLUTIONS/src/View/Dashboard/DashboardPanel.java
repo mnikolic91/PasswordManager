@@ -1,4 +1,5 @@
 package View.Dashboard;
+
 import Controller.PasswordController;
 import View.PanelChangeListener;
 
@@ -20,12 +21,14 @@ public class DashboardPanel extends JPanel {
         menuPanel = new MenuPanel();
         passwordController = new PasswordController(passwordPanel, menuPanel);
 
-
         setLayout(new BorderLayout());
         add(menuPanel, BorderLayout.NORTH);
-        add(passwordPanel, BorderLayout.CENTER);
-        add(previewPanel, BorderLayout.SOUTH);
-        setVisible(true);
+
+        JPanel contentPanel = new JPanel(new BorderLayout()); // Panel to hold passwordPanel and previewPanel
+        contentPanel.add(passwordPanel, BorderLayout.WEST);
+        contentPanel.add(previewPanel, BorderLayout.EAST);
+
+        add(contentPanel, BorderLayout.CENTER);
 
         JButton addNewButton = menuPanel.getAddNewButton();
         addNewButton.addActionListener(e -> showAddNewPasswordDialog());
@@ -54,7 +57,6 @@ public class DashboardPanel extends JPanel {
         dialog.add(new JLabel());
         dialog.add(saveButton);
 
-
         saveButton.addActionListener(e -> {
             String title = titleField.getText();
             String username = usernameField.getText();
@@ -62,11 +64,9 @@ public class DashboardPanel extends JPanel {
             String url = urlField.getText();
             passwordController.addNewPassword(title, username, password, url);
             dialog.dispose();
-
         });
 
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
     }
-
 }
