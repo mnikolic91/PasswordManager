@@ -91,6 +91,4 @@ public class PreviewPanel extends JPanel {
         passwordField.setText(password);
         urlField.setText(url);
     }
-
-
 }
