@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.PasswordModel;
+import Model.PasswordSession;
 import Model.UserSession;
 import Service.PasswordService;
 import View.Dashboard.MenuPanel;
@@ -10,6 +11,8 @@ import View.Dashboard.PreviewPanel;
 import java.util.List;
 
 public class PasswordController {
+
+    private PasswordSession passwordSession;
 
     private PasswordService passwordService;
     private PasswordPanel passwordPanel;
@@ -22,10 +25,26 @@ public class PasswordController {
         this.menuPanel = menuPanel;
         this.previewPanel = previewPanel;
         this.passwordService = new PasswordService();
+        passwordSession = new PasswordSession();
 
         userID = UserSession.getInstance().getUserID();
         refreshPasswordList();
         displayFirstPassword();
+        setupPasswordSelectionListener();
+    }
+
+    private void setupPasswordSelectionListener() {
+        passwordPanel.addPasswordSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                int viewRow = passwordPanel.getPasswordTable().getSelectedRow();
+                if (viewRow >= 0) {
+                    int modelRow = passwordPanel.getPasswordTable().convertRowIndexToModel(viewRow);
+                    int passwordId = (int) passwordPanel.getPasswordTable().getModel().getValueAt(modelRow, 0);
+                    System.out.println("Selected Password ID: " + passwordId);
+                    passwordSession.setSelectedPasswordId(passwordId);
+                }
+            }
+        });
     }
 
     public void refreshPasswordList() {
@@ -50,4 +69,5 @@ public class PasswordController {
             previewPanel.setData(firstPassword.getTitle(), firstPassword.getUsername(), firstPassword.getPassword(), firstPassword.getUrl());
         }
     }
+
 }

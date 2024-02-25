@@ -58,6 +58,7 @@ public class PasswordDAOImplementation implements PasswordDAO {
                         rs.getString("password"),
                         rs.getString("url")
                 );
+                password.setEntryID(rs.getInt("entryID"));
                 password.setCreationDate(rs.getString("creationDate"));
                 password.setLastUpdateDate(rs.getString("lastUpdateDate"));
                 passwords.add(password);

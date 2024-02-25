@@ -49,7 +49,7 @@ public class MainFrame extends JFrame implements PanelChangeListener {
 
     private void layoutComps() {
         add(dashboardPanel);
-//        add(registrationPanel);
-//        add(loginPanel);
+        add(registrationPanel);
+        add(loginPanel);
     }
 }
