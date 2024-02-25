@@ -1,9 +1,32 @@
 package Model;
 
-import java.util.Observable;
+import ObserverInterfaces.ObservableInterface;
+import ObserverInterfaces.ObserverInterface;
 
-public class PasswordSession extends Observable {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Observer;
+
+public class PasswordSession implements ObservableInterface {
+
+    private List<ObserverInterface> observers = new ArrayList<>();
     private int selectedPasswordId;
+
+
+
+    @Override
+    public void addObserver(ObserverInterface o) {
+        if (!observers.contains(o)) {
+            observers.add(o);
+        }
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (ObserverInterface observer : observers) {
+            observer.update(this, selectedPasswordId);
+        }
+    }
 
     public int getSelectedPasswordId() {
         return selectedPasswordId;
@@ -11,7 +34,6 @@ public class PasswordSession extends Observable {
 
     public void setSelectedPasswordId(int selectedPasswordId) {
         this.selectedPasswordId = selectedPasswordId;
-        setChanged();
         notifyObservers();
     }
 }

@@ -21,4 +21,9 @@ public class PasswordService {
     public void addNewPassword(PasswordModel newPassword) {
         passwordDAO.insert(newPassword);
     }
+
+    public PasswordModel getPasswordById(int id) {
+        return passwordDAO.findById(id);
+    }
+
 }

@@ -71,6 +71,33 @@ public class PasswordDAOImplementation implements PasswordDAO {
     }
 
     @Override
+    public PasswordModel findById(int id) {
+        String sql = "SELECT * FROM password_entries WHERE entryID = ?";
+        try (Connection conn = DatabaseConnection.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                PasswordModel password = new PasswordModel(
+                        rs.getInt("userID"),
+                        rs.getString("title"),
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getString("url")
+                );
+                password.setEntryID(rs.getInt("entryID"));
+                return password;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+
+    @Override
     public void update(PasswordModel password) {
         String sql = "UPDATE password_entries SET title = ?, username = ?, password = ?, url = ?, lastUpdateDate = ? WHERE entryID = ? AND userID = ?";
 

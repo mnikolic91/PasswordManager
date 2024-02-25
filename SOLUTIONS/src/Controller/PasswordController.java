@@ -3,6 +3,8 @@ package Controller;
 import Model.PasswordModel;
 import Model.PasswordSession;
 import Model.UserSession;
+import ObserverInterfaces.ObservableInterface;
+import ObserverInterfaces.ObserverInterface;
 import Service.PasswordService;
 import View.Dashboard.MenuPanel;
 import View.Dashboard.PasswordPanel;
@@ -10,7 +12,7 @@ import View.Dashboard.PreviewPanel;
 
 import java.util.List;
 
-public class PasswordController {
+public class PasswordController implements ObserverInterface {
 
     private PasswordSession passwordSession;
 
@@ -25,7 +27,8 @@ public class PasswordController {
         this.menuPanel = menuPanel;
         this.previewPanel = previewPanel;
         this.passwordService = new PasswordService();
-        passwordSession = new PasswordSession();
+        this.passwordSession = new PasswordSession();
+        this.passwordSession.addObserver(this);
 
         userID = UserSession.getInstance().getUserID();
         refreshPasswordList();
@@ -67,6 +70,17 @@ public class PasswordController {
         if (!passwords.isEmpty()) {
             PasswordModel firstPassword = passwords.get(0);
             previewPanel.setData(firstPassword.getTitle(), firstPassword.getUsername(), firstPassword.getPassword(), firstPassword.getUrl());
+        }
+    }
+
+    @Override
+    public void update(ObservableInterface subject, Object arg) {
+        if (subject instanceof PasswordSession) {
+            int passwordId = (int) arg;
+            PasswordModel password = passwordService.getPasswordById(passwordId);
+            if (password != null) {
+                previewPanel.setData(password.getTitle(), password.getUsername(), password.getPassword(), password.getUrl());
+            }
         }
     }
 

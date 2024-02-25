@@ -10,5 +10,6 @@ public interface PasswordDAO {
     List<PasswordModel> findByUserId(int userId);
     void update(PasswordModel password);
     void delete(PasswordModel password);
+    PasswordModel findById(int id);
 
 }
