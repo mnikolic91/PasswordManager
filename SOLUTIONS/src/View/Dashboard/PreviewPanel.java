@@ -9,7 +9,7 @@ import java.security.SecureRandom;
 public class PreviewPanel extends JPanel {
     private JTextField titleField;
     private JTextField usernameField;
-    private JPasswordField passwordField;
+    private JTextField passwordField;
     private JTextField urlField;
     private JButton updatePasswordButton;
     private JButton deletePasswordButton;
@@ -19,28 +19,48 @@ public class PreviewPanel extends JPanel {
     public PreviewPanel() {
         titleField = new JTextField(20);
         usernameField = new JTextField(20);
-        passwordField = new JPasswordField(20);
+        passwordField = new JTextField(20);
         urlField = new JTextField(20);
+        strongPasswordField = new JTextField(20);
         updatePasswordButton = new JButton("Update Password");
         deletePasswordButton = new JButton("Delete Password");
         generatePasswordButton = new JButton("Generate a Strong Password");
-        strongPasswordField = new JTextField(20);
         strongPasswordField.setEditable(false);
 
-        setLayout(new GridLayout(6, 2, 5, 5));
-        add(new JLabel("Title:"));
-        add(titleField);
-        add(new JLabel("Username:"));
-        add(usernameField);
-        add(new JLabel("Password:"));
-        add(passwordField);
-        add(new JLabel("URL:"));
-        add(urlField);
-        add(new JLabel("Generated Password:"));
-        add(strongPasswordField);
-        add(updatePasswordButton);
-        add(deletePasswordButton);
-        add(generatePasswordButton);
+
+        setLayout(new GridBagLayout());
+        GridBagConstraints gc = new GridBagConstraints();
+        gc.fill = GridBagConstraints.HORIZONTAL;
+        gc.insets = new Insets(50, 50, 50, 50);
+        add(new JLabel("Title:"), gc);
+        gc.gridx = 1;
+        add(titleField, gc);
+        gc.gridx = 0;
+        gc.gridy = 1;
+        add(new JLabel("Username:"), gc);
+        gc.gridx = 1;
+        add(usernameField, gc);
+        gc.gridx = 0;
+        gc.gridy = 2;
+        add(new JLabel("Password:"), gc);
+        gc.gridx = 1;
+        add(passwordField, gc);
+        gc.gridx = 0;
+        gc.gridy = 3;
+        add(new JLabel("URL:"), gc);
+        gc.gridx = 1;
+        add(urlField, gc);
+        gc.gridx = 0;
+        gc.gridy = 4;
+        add(generatePasswordButton, gc);
+        gc.gridx = 1;
+        add(strongPasswordField, gc);
+        gc.gridx = 0;
+        gc.gridy = 5;
+        add(updatePasswordButton, gc);
+        gc.gridx = 1;
+        add(deletePasswordButton, gc);
+
 
         generatePasswordButton.addActionListener(new ActionListener() {
             @Override
@@ -78,7 +98,7 @@ public class PreviewPanel extends JPanel {
     }
 
     public String getPassword() {
-        return new String(passwordField.getPassword());
+        return passwordField.getText();
     }
 
     public String getURL() {

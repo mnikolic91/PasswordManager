@@ -24,9 +24,12 @@ public class DashboardPanel extends JPanel {
         setLayout(new BorderLayout());
         add(menuPanel, BorderLayout.NORTH);
 
-        JPanel contentPanel = new JPanel(new BorderLayout());
-        contentPanel.add(passwordPanel, BorderLayout.WEST);
-        contentPanel.add(previewPanel, BorderLayout.EAST);
+
+        JPanel contentPanel = new JPanel(null);
+        passwordPanel.setBounds(20, 50, 500, 600);
+        previewPanel.setBounds(600, -50, 600, 800);
+        contentPanel.add(passwordPanel);
+        contentPanel.add(previewPanel);
 
         add(contentPanel, BorderLayout.CENTER);
 

@@ -19,6 +19,7 @@ public class PasswordPanel extends JPanel {
     private void initializeTableModel() {
         passwordTableModel = new DefaultTableModel(new Object[]{"ID", "Title", "Created", "Last Update"}, 0);
         passwordTable = new JTable(passwordTableModel);
+        setLayout(new BorderLayout());
         add(new JScrollPane(passwordTable), BorderLayout.CENTER);
     }
 
