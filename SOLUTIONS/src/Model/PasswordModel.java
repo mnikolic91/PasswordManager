@@ -10,6 +10,7 @@ public class PasswordModel {
     private String url;
     private String creationDate;
     private String lastUpdateDate;
+    private String encryptionType;
 
     public PasswordModel(int userID, String title, String username, String password, String url) {
         this.userID = userID;
@@ -82,5 +83,13 @@ public class PasswordModel {
 
     public void setLastUpdateDate(String lastUpdateDate) {
         this.lastUpdateDate = lastUpdateDate;
+    }
+
+    public String getEncryptionType() {
+        return encryptionType;
+    }
+
+    public void setEncryptionType(String encryptionType) {
+        this.encryptionType = encryptionType;
     }
 }

@@ -16,7 +16,7 @@ public class PasswordDAOImplementation implements PasswordDAO {
 
     @Override
     public void insert(PasswordModel password) {
-        String sql = "INSERT INTO password_entries(userID, title, username, password, url, creationDate, lastUpdateDate) VALUES(?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO password_entries(userID, title, username, password, url, creationDate, lastUpdateDate, encryptionType) VALUES(?,?,?,?,?,?,?,?)";
 
         password.setCreationDate(currentDate());
         password.setLastUpdateDate(currentDate());
@@ -31,12 +31,14 @@ public class PasswordDAOImplementation implements PasswordDAO {
             pstmt.setString(5, password.getUrl());
             pstmt.setString(6, password.getCreationDate());
             pstmt.setString(7, password.getLastUpdateDate());
+            pstmt.setString(8, password.getEncryptionType());
 
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
+
 
 
     @Override
@@ -61,6 +63,7 @@ public class PasswordDAOImplementation implements PasswordDAO {
                 password.setEntryID(rs.getInt("entryID"));
                 password.setCreationDate(rs.getString("creationDate"));
                 password.setLastUpdateDate(rs.getString("lastUpdateDate"));
+                password.setEncryptionType(rs.getString("encryptionType"));
                 passwords.add(password);
             }
         } catch (SQLException e) {
@@ -88,6 +91,7 @@ public class PasswordDAOImplementation implements PasswordDAO {
                         rs.getString("url")
                 );
                 password.setEntryID(rs.getInt("entryID"));
+                password.setEncryptionType(rs.getString("encryptionType"));
                 return password;
             }
         } catch (SQLException e) {
@@ -99,7 +103,7 @@ public class PasswordDAOImplementation implements PasswordDAO {
 
     @Override
     public void update(PasswordModel password) {
-        String sql = "UPDATE password_entries SET title = ?, username = ?, password = ?, url = ?, lastUpdateDate = ? WHERE entryID = ? AND userID = ?";
+        String sql = "UPDATE password_entries SET title = ?, username = ?, password = ?, url = ?, lastUpdateDate = ?, encryptionType = ? WHERE entryID = ? AND userID = ?";
 
         password.setLastUpdateDate(currentDate());
 
@@ -111,14 +115,16 @@ public class PasswordDAOImplementation implements PasswordDAO {
             pstmt.setString(3, password.getPassword());
             pstmt.setString(4, password.getUrl());
             pstmt.setString(5, password.getLastUpdateDate());
-            pstmt.setInt(6, password.getEntryID());
-            pstmt.setInt(7, password.getUserID());
+            pstmt.setString(6, password.getEncryptionType());
+            pstmt.setInt(7, password.getEntryID());
+            pstmt.setInt(8, password.getUserID());
 
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
+
 
     @Override
     public void delete(PasswordModel password) {
