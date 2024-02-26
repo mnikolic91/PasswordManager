@@ -24,7 +24,7 @@ This Password Manager is the culmination of our Object-Oriented Programming cour
 ## Setup and Installation
 1. Clone the repository.
 2. Install Java (Version 8 or higher).
-3. Set up the database using the schema in the `database` folder.
+3. Set up the database using the schema in the `database_schema` file.
 4. Update database configuration with your credentials.
 5. Compile and run the application.
 
