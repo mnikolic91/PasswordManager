@@ -22,11 +22,11 @@ public class PasswordController implements ObserverInterface {
     private PreviewPanel previewPanel;
     private int userID;
 
-    public PasswordController(PasswordPanel passwordPanel, MenuPanel menuPanel, PreviewPanel previewPanel) {
+    public PasswordController(PasswordService passwordService, PasswordPanel passwordPanel, MenuPanel menuPanel, PreviewPanel previewPanel) {
         this.passwordPanel = passwordPanel;
         this.menuPanel = menuPanel;
         this.previewPanel = previewPanel;
-        this.passwordService = new PasswordService();
+        this.passwordService = passwordService;
         this.passwordSession = new PasswordSession();
         this.passwordSession.addObserver(this);
 
