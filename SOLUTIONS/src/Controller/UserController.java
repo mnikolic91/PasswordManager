@@ -24,23 +24,26 @@ public class UserController {
         this.userService = userService;
         this.loginPanel = loginPanel;
         this.registrationPanel = registrationPanel;
-        initController();
         initLoginActionListener();
-
+        initRegistrationActionListener();
     }
 
-    private void initController() {
+    private void initRegistrationActionListener() {
          registrationListener = new RegistrationPanelListener() {
             @Override
             public void registrationSucceeded() {
                 System.out.println("Registration successful");
                 performRegistration(registrationPanel.getUsername(), registrationPanel.getPassword(), registrationPanel.getConfirmPassword());
             }
-            @Override
-            public void backToLogin() {
-            }
+             //useless function which purpose is just to remove a bizarre bug that happens while instancing the listener
+             //function shouldnt be removed because it will cause a bug
+             public void uselessFunction(){
+                 System.out.println("Useless function");
+             }
+
         };
         registrationPanel.setRegistrationListener(registrationListener);
+
     }
 
     private void initLoginActionListener(){
@@ -58,6 +61,7 @@ public class UserController {
         };
         loginPanel.setLoginListener(loginListener);
     }
+
 
     private void performLogin(String username, char[] password) {
         System.out.println("Performing login");

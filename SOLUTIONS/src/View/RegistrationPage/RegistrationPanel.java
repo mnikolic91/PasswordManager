@@ -132,26 +132,29 @@ public class RegistrationPanel extends JPanel {
     }
 
 
+
     private void activateComps() {
         backToLoginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 if (panelChangeListener != null) {
                     LoginPanel loginPanel = new LoginPanel(panelChangeListener);
                     panelChangeListener.onPanelChange(loginPanel);
                 }
             }
         });
-
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("register button clicked");
+                System.out.println(registrationListener);
                 if (registrationListener != null) {
-                    registrationListener.registrationSucceeded();
                     System.out.println("not null");
-
+                    registrationListener.registrationSucceeded();
+                }
+                if (panelChangeListener != null) {
+                    LoginPanel loginPanel = new LoginPanel(panelChangeListener);
+                    panelChangeListener.onPanelChange(loginPanel);
                 }
             }
         });
@@ -159,7 +162,10 @@ public class RegistrationPanel extends JPanel {
 
     public void setRegistrationListener(RegistrationPanelListener listener) {
         this.registrationListener = listener;
+        System.out.println(listener + " has been set.");
+        System.out.println("Registration listener has been set.");
     }
+
 
     public String getUsername() {
         return usernameField.getText();
