@@ -11,8 +11,6 @@ public class PasswordSession implements ObservableInterface {
     private List<ObserverInterface> observers = new ArrayList<>();
     private int selectedPasswordId;
 
-
-
     @Override
     public void addObserver(ObserverInterface o) {
         if (!observers.contains(o)) {
@@ -27,9 +25,6 @@ public class PasswordSession implements ObservableInterface {
         }
     }
 
-    public int getSelectedPasswordId() {
-        return selectedPasswordId;
-    }
 
     public void setSelectedPasswordId(int selectedPasswordId) {
         this.selectedPasswordId = selectedPasswordId;
