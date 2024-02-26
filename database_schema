@@ -1,0 +1,27 @@
+-- SQLite schema setup script
+  
+In "DatabaseConnection" class add the path to your database. 
+  
+
+-- Create a table for storing user information
+CREATE TABLE IF NOT EXISTS users (
+    userID INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT NOT NULL UNIQUE,
+    password TEXT NOT NULL,
+    salt TEXT NOT NULL
+);
+
+-- Create a table for storing password entries
+CREATE TABLE IF NOT EXISTS password_entries (
+    entryID INTEGER PRIMARY KEY AUTOINCREMENT,
+    userID INTEGER NOT NULL,
+    title TEXT NOT NULL,
+    username TEXT NOT NULL,
+    password TEXT NOT NULL,
+    url TEXT NOT NULL,
+    creationDate TEXT NOT NULL,
+    lastUpdateDate TEXT NOT NULL,
+    encryptionType TEXT NOT NULL,
+    FOREIGN KEY(userID) REFERENCES users(userID)
+);
+
