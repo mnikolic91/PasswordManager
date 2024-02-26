@@ -34,7 +34,6 @@ public class PasswordController implements ObserverInterface, PasswordUpdateList
 
         userID = UserSession.getInstance().getUserID();
         refreshPasswordList();
-        displayFirstPassword();
         setupPasswordSelectionListener();
 
         this.menuPanel.setRefreshAction(e -> refreshPasswordList());
@@ -72,14 +71,6 @@ public class PasswordController implements ObserverInterface, PasswordUpdateList
         refreshPasswordList();
     }
 
-    private void displayFirstPassword() {
-        userID = UserSession.getInstance().getUserID();
-        List<PasswordModel> passwords = passwordService.getPasswordsForUser(userID);
-        if (!passwords.isEmpty()) {
-            PasswordModel firstPassword = passwords.get(0);
-            previewPanel.setData(firstPassword.getTitle(), firstPassword.getUsername(), firstPassword.getPassword(), firstPassword.getUrl());
-        }
-    }
 
     @Override
     public void update(ObservableInterface subject, Object arg) {
@@ -88,26 +79,23 @@ public class PasswordController implements ObserverInterface, PasswordUpdateList
             PasswordModel password = passwordService.getPasswordById(passwordId);
             previewPanel.setSelectedPasswordId(passwordId);
             if (password != null) {
-                previewPanel.setData(password.getTitle(), password.getUsername(), password.getPassword(), password.getUrl());
+                String encryptionType = password.getEncryptionType();
+                previewPanel.setData(password.getTitle(), password.getUsername(), password.getPassword(), password.getUrl(), encryptionType); // Sada proslijedite i peti argument
             }
         }
     }
 
+
     @Override
     public void onUpdateRequested(int passwordId, String title, String username, String password, String url) {
         EncryptionStrategy strategy = menuPanel.getCurrentEncryptionStrategy();
-        String salt = null;
-        String hashedPassword = null;
         String encryptionType = null;
 
         if (strategy != null) {
             password = strategy.encrypt(password);
             encryptionType = strategy.getClass().getSimpleName();
         } else {
-            salt = PasswordUtil.generateSalt(16);
-            hashedPassword = PasswordUtil.hashPassword(password, salt);
-            password = hashedPassword;
-            encryptionType = "SALT_HASH";
+            encryptionType = "PLAIN_TEXT";
         }
 
         PasswordModel updatedPassword = new PasswordModel(userID, title, username, password, url);
@@ -116,5 +104,4 @@ public class PasswordController implements ObserverInterface, PasswordUpdateList
         passwordService.updatePassword(updatedPassword);
         refreshPasswordList();
     }
-
 }

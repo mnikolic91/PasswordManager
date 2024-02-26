@@ -1,8 +1,8 @@
 package View.Dashboard;
 
-import View.Dashboard.EncryptionStrategy.AESEncryptionStrategy;
+import View.Dashboard.EncryptionStrategy.CaesarCipherStrategy;
 import View.Dashboard.EncryptionStrategy.EncryptionStrategy;
-import View.Dashboard.EncryptionStrategy.RSAEncryptionStrategy;
+import View.Dashboard.EncryptionStrategy.XOREncryptionStrategy;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,14 +30,14 @@ public class MenuPanel extends JPanel {
         encryptionMenu = new JPopupMenu();
         encryptionButton = new JButton("Encryption");
 
-        JMenuItem aesEncryption = new JMenuItem("AES Encryption");
+        JMenuItem aesEncryption = new JMenuItem("Caesar Encryption");
         aesEncryption.addActionListener(e -> {
-            setCurrentEncryptionStrategy(new AESEncryptionStrategy());
+            setCurrentEncryptionStrategy(new CaesarCipherStrategy());
         });
 
-        JMenuItem rsaEncryption = new JMenuItem("RSA Encryption");
+        JMenuItem rsaEncryption = new JMenuItem("XORE Encryption");
         rsaEncryption.addActionListener(e -> {
-            setCurrentEncryptionStrategy(new RSAEncryptionStrategy());
+            setCurrentEncryptionStrategy(new XOREncryptionStrategy());
         });
 
         encryptionMenu.add(aesEncryption);

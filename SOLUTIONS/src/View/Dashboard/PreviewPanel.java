@@ -1,6 +1,9 @@
 package View.Dashboard;
 
 import Controller.PasswordUpdateListener;
+import View.Dashboard.EncryptionStrategy.CaesarCipherStrategy;
+import View.Dashboard.EncryptionStrategy.EncryptionStrategy;
+import View.Dashboard.EncryptionStrategy.XOREncryptionStrategy;
 
 import javax.swing.*;
 import java.awt.*;
@@ -131,10 +134,27 @@ public class PreviewPanel extends JPanel {
         return passwordField.getText();
     }
 
-    public void setData(String title, String username, String password, String url) {
+    public void setData(String title, String username, String password, String url, String encryptionType) {
         titleField.setText(title);
         usernameField.setText(username);
-        passwordField.setText(password);
+        passwordField.setText(decryptPassword(password, encryptionType));
         urlField.setText(url);
+    }
+
+    private String decryptPassword(String encryptedPassword, String encryptionType) {
+        EncryptionStrategy strategy = getEncryptionStrategy(encryptionType);
+        if (strategy != null) {
+            return strategy.decrypt(encryptedPassword);
+        }
+        return encryptedPassword;
+    }
+
+    private EncryptionStrategy getEncryptionStrategy(String encryptionType) {
+        if ("Caesar".equals(encryptionType)) {
+            return new CaesarCipherStrategy();
+        } else if ("XORE".equals(encryptionType)) {
+            return new XOREncryptionStrategy();
+        }
+        return null;
     }
 }
