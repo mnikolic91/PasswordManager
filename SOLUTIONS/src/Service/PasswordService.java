@@ -26,4 +26,9 @@ public class PasswordService {
         return passwordDAO.findById(id);
     }
 
+    public void updatePassword(PasswordModel updatedPassword) {
+        passwordDAO.update(updatedPassword);
+    }
+
+
 }

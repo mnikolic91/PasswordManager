@@ -12,10 +12,9 @@ import View.Dashboard.PreviewPanel;
 
 import java.util.List;
 
-public class PasswordController implements ObserverInterface {
+public class PasswordController implements ObserverInterface, PasswordUpdateListener {
 
     private PasswordSession passwordSession;
-
     private PasswordService passwordService;
     private PasswordPanel passwordPanel;
     private MenuPanel menuPanel;
@@ -37,6 +36,7 @@ public class PasswordController implements ObserverInterface {
         setupPasswordSelectionListener();
 
         this.menuPanel.setRefreshAction(e -> refreshPasswordList());
+        previewPanel.setUpdateListener(this);
     }
 
     private void setupPasswordSelectionListener() {
@@ -79,15 +79,28 @@ public class PasswordController implements ObserverInterface {
         }
     }
 
+    public void updatePassword(int passwordId, String title, String username, String password, String url) {
+        PasswordModel updatedPassword = new PasswordModel(userID, title, username, password, url);
+        updatedPassword.setEntryID(passwordId);
+        passwordService.updatePassword(updatedPassword);
+        refreshPasswordList();
+    }
+
+
     @Override
     public void update(ObservableInterface subject, Object arg) {
         if (subject instanceof PasswordSession) {
             int passwordId = (int) arg;
             PasswordModel password = passwordService.getPasswordById(passwordId);
+            previewPanel.setSelectedPasswordId(passwordId);
             if (password != null) {
                 previewPanel.setData(password.getTitle(), password.getUsername(), password.getPassword(), password.getUrl());
             }
         }
     }
 
+    @Override
+    public void onUpdateRequested(int passwordId, String title, String username, String password, String url) {
+        updatePassword(passwordId, title, username, password, url);
+    }
 }

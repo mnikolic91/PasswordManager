@@ -1,5 +1,7 @@
 package View.Dashboard;
 
+import Controller.PasswordUpdateListener;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -15,6 +17,10 @@ public class PreviewPanel extends JPanel {
     private JButton deletePasswordButton;
     private JButton generatePasswordButton;
     private JTextField strongPasswordField;
+    private PasswordUpdateListener updateListener;
+
+    private int selectedPasswordId = -1;
+
 
     public PreviewPanel() {
         titleField = new JTextField(20);
@@ -69,6 +75,33 @@ public class PreviewPanel extends JPanel {
                 strongPasswordField.setText(generatedPassword);
             }
         });
+
+        updatePasswordButton.addActionListener(e -> {
+            if (selectedPasswordId != -1) {
+                String title = titleField.getText();
+                String username = usernameField.getText();
+                String password = passwordField.getText();
+                String url = urlField.getText();
+                String generatedPassword = strongPasswordField.getText();
+
+                if (!generatedPassword.isEmpty() && !password.equals(generatedPassword)) {
+                    password = generatedPassword;
+                }
+
+                updateListener.onUpdateRequested(selectedPasswordId, title, username, password, url);
+            } else {
+                JOptionPane.showMessageDialog(null, "No password selected for update.");
+            }
+        });
+    }
+
+    public void setSelectedPasswordId(int id) {
+        this.selectedPasswordId = id;
+    }
+
+
+    public void setUpdateListener(PasswordUpdateListener listener) {
+        this.updateListener = listener;
     }
     private String generateStrongPassword() {
         String upperCaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
