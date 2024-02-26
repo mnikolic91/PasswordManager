@@ -12,8 +12,8 @@ This Password Manager is the culmination of our Object-Oriented Programming cour
 
 ## Technologies
 - **Programming Language**: Java (Version 8 or higher recommended)
-- **Database**: MySQL
-- **Encryption**: To be decided
+- **Database**: SQLite
+- **Encryption**: Simple mock encryption for simplicity, can be changed flexibly
 - **Development Tools**: IntelliJ
 
 ## How It Works
