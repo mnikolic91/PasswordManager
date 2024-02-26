@@ -10,8 +10,8 @@ public class PasswordService {
 
     private PasswordDAO passwordDAO;
 
-    public PasswordService(PasswordDAO passwordDAO) {
-        this.passwordDAO = passwordDAO;
+    public PasswordService() {
+        this.passwordDAO = new PasswordDAOImplementation();
     }
 
     public List<PasswordModel> getPasswordsForUser(int userID) {

@@ -22,18 +22,21 @@ public class PasswordController implements ObserverInterface {
     private PreviewPanel previewPanel;
     private int userID;
 
-    public PasswordController(PasswordService passwordService, PasswordPanel passwordPanel, MenuPanel menuPanel, PreviewPanel previewPanel) {
+    public PasswordController(PasswordPanel passwordPanel, MenuPanel menuPanel, PreviewPanel previewPanel) {
+        this.passwordService = new PasswordService();
+        this.passwordSession = new PasswordSession();
+        this.passwordSession.addObserver(this);
         this.passwordPanel = passwordPanel;
         this.menuPanel = menuPanel;
         this.previewPanel = previewPanel;
-        this.passwordService = passwordService;
-        this.passwordSession = new PasswordSession();
-        this.passwordSession.addObserver(this);
+
 
         userID = UserSession.getInstance().getUserID();
         refreshPasswordList();
         displayFirstPassword();
         setupPasswordSelectionListener();
+
+        this.menuPanel.setRefreshAction(e -> refreshPasswordList());
     }
 
     private void setupPasswordSelectionListener() {
@@ -51,6 +54,7 @@ public class PasswordController implements ObserverInterface {
     }
 
     public void refreshPasswordList() {
+        userID = UserSession.getInstance().getUserID();
         List<PasswordModel> passwords = passwordService.getPasswordsForUser(userID);
         System.out.println("Refreshing password list for user ID: " + userID);
         if (passwordPanel != null) {
@@ -60,12 +64,14 @@ public class PasswordController implements ObserverInterface {
     }
 
     public void addNewPassword(String title, String username, String password, String url) {
+        userID = UserSession.getInstance().getUserID();
         PasswordModel newPassword = new PasswordModel(userID, title, username, password, url);
         passwordService.addNewPassword(newPassword);
         refreshPasswordList();
     }
 
     private void displayFirstPassword() {
+        userID = UserSession.getInstance().getUserID();
         List<PasswordModel> passwords = passwordService.getPasswordsForUser(userID);
         if (!passwords.isEmpty()) {
             PasswordModel firstPassword = passwords.get(0);

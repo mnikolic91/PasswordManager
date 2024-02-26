@@ -6,6 +6,7 @@ import View.Dashboard.EncryptionStrategy.RSAEncryptionStrategy;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 
 public class MenuPanel extends JPanel {
@@ -13,12 +14,15 @@ public class MenuPanel extends JPanel {
     private JButton encryptionButton;
     private JPopupMenu encryptionMenu;
     private EncryptionStrategy currentEncryptionStrategy;
+    private JButton refreshButton; // Dodajemo gumb za osvježavanje
 
     public MenuPanel() {
         addNewButton = new JButton("Add New");
+        refreshButton = new JButton("Refresh"); // Inicijalizacija gumba za osvježavanje
         initializeEncryptionMenu();
         setLayout(new FlowLayout(FlowLayout.LEFT));
         add(addNewButton);
+        add(refreshButton); // Dodavanje gumba za osvježavanje na panel
         add(encryptionButton);
     }
 
@@ -52,6 +56,10 @@ public class MenuPanel extends JPanel {
             String encryptedData = currentEncryptionStrategy.encrypt("Example Data");
             System.out.println(encryptedData);
         }
+    }
+
+    public void setRefreshAction(ActionListener actionListener) {
+        refreshButton.addActionListener(actionListener);
     }
 
     public JButton getAddNewButton() {

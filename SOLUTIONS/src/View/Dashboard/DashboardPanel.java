@@ -1,9 +1,6 @@
 package View.Dashboard;
 
 import Controller.PasswordController;
-import Model.DataAccessObjects.PasswordDAO;
-import Model.DataAccessObjects.PasswordDAOImplementation;
-import Service.PasswordService;
 import View.PanelChangeListener;
 
 import javax.swing.*;
@@ -16,31 +13,22 @@ public class DashboardPanel extends JPanel {
     private MenuPanel menuPanel;
     private PreviewPanel previewPanel;
     private PasswordController passwordController;
-    private PasswordDAO passwordDAO;
-    private PasswordService passwordService;
 
     public DashboardPanel(PanelChangeListener panelChangeListener) {
         this.panelChangeListener = panelChangeListener;
         passwordPanel = new PasswordPanel();
         previewPanel = new PreviewPanel();
         menuPanel = new MenuPanel();
-        passwordDAO = new PasswordDAOImplementation();
-        passwordService = new PasswordService(passwordDAO);
-        passwordController = new PasswordController(passwordService, passwordPanel, menuPanel, previewPanel);
+        passwordController = new PasswordController(passwordPanel, menuPanel, previewPanel);
 
         setLayout(new BorderLayout());
         add(menuPanel, BorderLayout.NORTH);
 
-
-        JPanel contentPanel = new JPanel(null);
-        passwordPanel.setBounds(20, 50, 500, 600);
-        previewPanel.setBounds(600, -50, 600, 800);
-        contentPanel.add(passwordPanel);
-        contentPanel.add(previewPanel);
+        JPanel contentPanel = new JPanel(new BorderLayout());
+        contentPanel.add(passwordPanel, BorderLayout.WEST);
+        contentPanel.add(previewPanel, BorderLayout.EAST);
 
         add(contentPanel, BorderLayout.CENTER);
-
-
 
         JButton addNewButton = menuPanel.getAddNewButton();
         addNewButton.addActionListener(e -> showAddNewPasswordDialog());
