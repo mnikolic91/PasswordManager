@@ -2,10 +2,12 @@ package Controller;
 
 import Model.PasswordModel;
 import Model.PasswordSession;
+import Model.PasswordUtil;
 import Model.UserSession;
 import ObserverInterfaces.ObservableInterface;
 import ObserverInterfaces.ObserverInterface;
 import Service.PasswordService;
+import View.Dashboard.EncryptionStrategy.EncryptionStrategy;
 import View.Dashboard.MenuPanel;
 import View.Dashboard.PasswordPanel;
 import View.Dashboard.PreviewPanel;
@@ -79,14 +81,6 @@ public class PasswordController implements ObserverInterface, PasswordUpdateList
         }
     }
 
-    public void updatePassword(int passwordId, String title, String username, String password, String url) {
-        PasswordModel updatedPassword = new PasswordModel(userID, title, username, password, url);
-        updatedPassword.setEntryID(passwordId);
-        passwordService.updatePassword(updatedPassword);
-        refreshPasswordList();
-    }
-
-
     @Override
     public void update(ObservableInterface subject, Object arg) {
         if (subject instanceof PasswordSession) {
@@ -101,6 +95,26 @@ public class PasswordController implements ObserverInterface, PasswordUpdateList
 
     @Override
     public void onUpdateRequested(int passwordId, String title, String username, String password, String url) {
-        updatePassword(passwordId, title, username, password, url);
+        EncryptionStrategy strategy = menuPanel.getCurrentEncryptionStrategy();
+        String salt = null;
+        String hashedPassword = null;
+        String encryptionType = null;
+
+        if (strategy != null) {
+            password = strategy.encrypt(password);
+            encryptionType = strategy.getClass().getSimpleName();
+        } else {
+            salt = PasswordUtil.generateSalt(16);
+            hashedPassword = PasswordUtil.hashPassword(password, salt);
+            password = hashedPassword;
+            encryptionType = "SALT_HASH";
+        }
+
+        PasswordModel updatedPassword = new PasswordModel(userID, title, username, password, url);
+        updatedPassword.setEntryID(passwordId);
+        updatedPassword.setEncryptionType(encryptionType);
+        passwordService.updatePassword(updatedPassword);
+        refreshPasswordList();
     }
+
 }
