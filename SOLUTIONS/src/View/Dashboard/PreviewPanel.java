@@ -150,9 +150,9 @@ public class PreviewPanel extends JPanel {
     }
 
     private EncryptionStrategy getEncryptionStrategy(String encryptionType) {
-        if ("Caesar".equals(encryptionType)) {
+        if ("CaesarCipherStrategy".equals(encryptionType)) {
             return new CaesarCipherStrategy();
-        } else if ("XORE".equals(encryptionType)) {
+        } else if ("XOREncryptionStrategy".equals(encryptionType)) {
             return new XOREncryptionStrategy();
         }
         return null;
