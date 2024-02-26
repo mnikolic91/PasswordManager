@@ -30,5 +30,9 @@ public class PasswordService {
         passwordDAO.update(updatedPassword);
     }
 
+    public void deletePassword(int passwordId, int userId) {
+        passwordDAO.delete(passwordId, userId);
+    }
+
 
 }

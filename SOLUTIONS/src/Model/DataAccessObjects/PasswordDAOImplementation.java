@@ -127,20 +127,21 @@ public class PasswordDAOImplementation implements PasswordDAO {
 
 
     @Override
-    public void delete(PasswordModel password) {
+    public void delete(int entryID, int userID) {
         String sql = "DELETE FROM password_entries WHERE entryID = ? AND userID = ?";
 
         try (Connection conn = DatabaseConnection.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setInt(1, password.getEntryID());
-            pstmt.setInt(2, password.getUserID());
+            pstmt.setInt(1, entryID);
+            pstmt.setInt(2, userID);
 
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
+
 
 
     private String currentDate() {

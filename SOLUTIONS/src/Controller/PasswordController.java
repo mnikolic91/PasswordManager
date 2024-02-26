@@ -104,4 +104,13 @@ public class PasswordController implements ObserverInterface, PasswordUpdateList
         passwordService.updatePassword(updatedPassword);
         refreshPasswordList();
     }
+
+    @Override
+    public void onDeleteRequested(int passwordId) {
+        int userId = UserSession.getInstance().getUserID();
+        passwordService.deletePassword(passwordId, userId);
+        refreshPasswordList();
+    }
+
+
 }

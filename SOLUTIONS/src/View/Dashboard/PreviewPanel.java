@@ -96,12 +96,24 @@ public class PreviewPanel extends JPanel {
                 JOptionPane.showMessageDialog(null, "No password selected for update.");
             }
         });
+
+        deletePasswordButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (selectedPasswordId != -1) {
+                    updateListener.onDeleteRequested(selectedPasswordId);
+                    clearFields();
+                } else {
+                    JOptionPane.showMessageDialog(null, "No password selected for deletion.");
+                }
+            }
+        });
+
     }
 
     public void setSelectedPasswordId(int id) {
         this.selectedPasswordId = id;
     }
-
 
     public void setUpdateListener(PasswordUpdateListener listener) {
         this.updateListener = listener;
@@ -139,6 +151,14 @@ public class PreviewPanel extends JPanel {
         usernameField.setText(username);
         passwordField.setText(decryptPassword(password, encryptionType));
         urlField.setText(url);
+    }
+
+    private void clearFields() {
+        titleField.setText("");
+        usernameField.setText("");
+        passwordField.setText("");
+        urlField.setText("");
+        selectedPasswordId = -1;
     }
 
     private String decryptPassword(String encryptedPassword, String encryptionType) {
