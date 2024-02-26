@@ -1,16 +1,14 @@
 package View.Dashboard.EncryptionStrategy;
 
 import javax.crypto.Cipher;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.NoSuchAlgorithmException;
-import java.security.PublicKey;
+import java.security.*;
 import java.util.Base64;
 
 
 public class RSAEncryptionStrategy implements EncryptionStrategy {
 
     private PublicKey publicKey;
+    private PrivateKey privateKey;
 
     public RSAEncryptionStrategy() {
         try {
@@ -18,10 +16,12 @@ public class RSAEncryptionStrategy implements EncryptionStrategy {
             keyPairGenerator.initialize(2048);
             KeyPair keyPair = keyPairGenerator.generateKeyPair();
             this.publicKey = keyPair.getPublic();
+            this.privateKey = keyPair.getPrivate();
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException("RSA key pair error", e);
         }
     }
+
 
     @Override
     public String encrypt(String data) {
@@ -34,4 +34,19 @@ public class RSAEncryptionStrategy implements EncryptionStrategy {
             throw new RuntimeException("Error encrypting data with RSA", e);
         }
     }
+
+    @Override
+    public String decrypt(String data) {
+        try {
+            Cipher cipher = Cipher.getInstance("RSA");
+            cipher.init(Cipher.DECRYPT_MODE, privateKey);
+
+            byte[] decodedBytes = Base64.getDecoder().decode(data);
+            byte[] decryptedBytes = cipher.doFinal(decodedBytes);
+            return new String(decryptedBytes);
+        } catch (Exception e) {
+            throw new RuntimeException("Error decrypting data with RSA", e);
+        }
+    }
+
 }

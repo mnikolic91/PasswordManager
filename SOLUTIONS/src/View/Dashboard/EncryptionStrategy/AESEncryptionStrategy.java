@@ -28,4 +28,20 @@ public class AESEncryptionStrategy implements EncryptionStrategy {
             throw new RuntimeException("Error encrypting data", e);
         }
     }
+
+    @Override
+    public String decrypt(String data) {
+        try {
+            SecretKey secretKey = new SecretKeySpec(KEY, ALGORITHM);
+            Cipher cipher = Cipher.getInstance(ALGORITHM);
+            cipher.init(Cipher.DECRYPT_MODE, secretKey);
+
+            byte[] decodedBytes = Base64.getDecoder().decode(data);
+            byte[] decryptedBytes = cipher.doFinal(decodedBytes);
+            return new String(decryptedBytes);
+        } catch (Exception e) {
+            throw new RuntimeException("Error decrypting data", e);
+        }
+    }
+
 }
