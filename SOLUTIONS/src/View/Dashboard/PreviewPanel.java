@@ -122,9 +122,6 @@ public class PreviewPanel extends JPanel {
         return password.toString();
     }
 
-    public String getTitle() {
-        return titleField.getText();
-    }
 
     public String getUsername() {
         return usernameField.getText();
@@ -132,10 +129,6 @@ public class PreviewPanel extends JPanel {
 
     public String getPassword() {
         return passwordField.getText();
-    }
-
-    public String getURL() {
-        return urlField.getText();
     }
 
     public void setData(String title, String username, String password, String url) {

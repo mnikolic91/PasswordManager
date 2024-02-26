@@ -43,7 +43,4 @@ public class UserModel {
         return salt;
     }
 
-    public void setSalt(String salt) {
-        this.salt = salt;
-    }
 }

@@ -14,15 +14,15 @@ public class MenuPanel extends JPanel {
     private JButton encryptionButton;
     private JPopupMenu encryptionMenu;
     private EncryptionStrategy currentEncryptionStrategy;
-    private JButton refreshButton; // Dodajemo gumb za osvježavanje
+    private JButton refreshButton;
 
     public MenuPanel() {
         addNewButton = new JButton("Add New");
-        refreshButton = new JButton("Refresh"); // Inicijalizacija gumba za osvježavanje
+        refreshButton = new JButton("Refresh");
         initializeEncryptionMenu();
         setLayout(new FlowLayout(FlowLayout.LEFT));
         add(addNewButton);
-        add(refreshButton); // Dodavanje gumba za osvježavanje na panel
+        add(refreshButton);
         add(encryptionButton);
     }
 

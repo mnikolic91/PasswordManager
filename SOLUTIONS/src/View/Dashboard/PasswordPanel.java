@@ -42,15 +42,4 @@ public class PasswordPanel extends JPanel {
         return passwordTable;
     }
 
-    public void setPasswordTable(JTable passwordTable) {
-        this.passwordTable = passwordTable;
-    }
-
-    public DefaultTableModel getPasswordTableModel() {
-        return passwordTableModel;
-    }
-
-    public void setPasswordTableModel(DefaultTableModel passwordTableModel) {
-        this.passwordTableModel = passwordTableModel;
-    }
 }
